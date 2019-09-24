@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protoype Auto-Correct", "Protoype Auto-Correct\Protoype Auto-Correct.csproj", "{F049F393-2CF4-42FA-AA44-90FBBCE097AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F049F393-2CF4-42FA-AA44-90FBBCE097AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F049F393-2CF4-42FA-AA44-90FBBCE097AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F049F393-2CF4-42FA-AA44-90FBBCE097AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F049F393-2CF4-42FA-AA44-90FBBCE097AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0BC830C-A908-4B2D-A69F-FD5DCDA038AA}
+	EndGlobalSection
+EndGlobal
