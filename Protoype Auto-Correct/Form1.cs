@@ -16,5 +16,11 @@ namespace Protoype_Auto_Correct
         {
             InitializeComponent();
         }
+
+        private void Enter_Click(object sender, EventArgs e)
+        {
+            Correction cr = new Correction();
+            hasil.Text = cr.Masuk(key.Text);
+        }
     }
 }
