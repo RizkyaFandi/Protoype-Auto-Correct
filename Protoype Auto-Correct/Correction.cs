@@ -26,10 +26,10 @@ namespace Protoype_Auto_Correct
             List<string> listSubstitute = Substitute(listArrayString);
             foreach (string s in listSubstitute)
                 text += s + " ";
-            //text += Environment.NewLine + "Transpose:" + Environment.NewLine;
-            //List<string> listTranspose = Transpose(listArrayString);
-            //foreach (string s in listTranspose)
-            //    text += s + " ";
+            text += Environment.NewLine + "Transpose:" + Environment.NewLine;
+            List<string> listTranspose = Transpose(kata);
+            foreach (string s in listTranspose)
+                text += s + " ";
             return text;
         }
 
@@ -83,20 +83,23 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        //public List<string> Transpose(List<string[]> kata)
-        //{
-        //    List<string> listString = new List<string>();
-        //    kata.RemoveAt(0);
-        //    kata.RemoveAt(kata.Count() - 1);
-        //    string s1 = "";
-        //    string s2 = "";
-        //    foreach (string[] arrayString in kata)
-        //    {
-        //        s1 = arrayString[0].Substring(arrayString[0].Count() - 1);
-        //        s2 = arrayString[1].Substring(0, 1);
-        //        listString.Add(arrayString[0].Remove(arrayString[0].Count() - 1) + s2 + s1 + arrayString[1].Remove(0, 1));
-        //    }
-        //    return listString;
-        //}
+        public List<string> Transpose(string kata)
+        {
+            List<string> listString = new List<string>();
+            int n = kata.Count();
+            char[] huruf = new char[n];
+            for (int i = 0; i < n - 1 ; i++)
+            {
+                for (int k = 0; k < n; k++)
+                {
+                    huruf[k] = kata[k];
+                }
+                char m = huruf[i + 1];
+                huruf[i + 1] = huruf[i];
+                huruf[i] = m;
+                listString.Add(new string(huruf));
+            }
+            return listString;
+        }
     }
 }
