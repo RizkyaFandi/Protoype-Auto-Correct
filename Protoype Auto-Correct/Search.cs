@@ -9,11 +9,23 @@ namespace Protoype_Auto_Correct
 {
     class Search
     {
-        public void Cari()
+        public Boolean Cari(string kata)
         {
-            StreamReader sr = new StreamReader("ser.txt");
-            Console.WriteLine(sr.ReadLine());
-            sr.Close();
+            Boolean exist = false;
+            var keyword = kata;
+            using (var sr = new StreamReader("kompas.txt"))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine();
+                    if (String.IsNullOrEmpty(line)) continue;
+                    if (line.IndexOf(keyword, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        exist = true ;
+                    }
+                }
+            }
+            return exist;
         }
     }
 }
