@@ -8,7 +8,7 @@ namespace Protoype_Auto_Correct
 {
     class Correction
     {
-        public string Masuk(string kata)
+        public string Masuk(string kata)    // Membuat text untuk menampilkan jarak 1 pada Windows Form
         {
             List<string[]> listArrayString = Split(kata);
             string text = "Splits:" + Environment.NewLine;
@@ -33,13 +33,24 @@ namespace Protoype_Auto_Correct
             return text;
         }
 
+        public string MasukJarakDua(string kata)    // Membuat text untuk menampilkan jarak 2 pada Windows Form
+        {
+            List<string> listString = JarakDua(kata);
+            string text = "";
+            foreach (string s in listString)
+                text += s + " ";
+            return text;
+        }
+
+        // Membuat list array string yang berisi seluruh kemungkinan pemotongan kata
+        // Misal: aba menjadi [][aba], [a][ba], [ab][a], dan [aba][] 
         public List<string[]> Split(string kata)
         {
             int n = kata.Count();
             List<string[]> listArrayString = new List<string[]>();
             string kata1 = "";
             string kata2 = "";
-            for (int i = 0 ; i <= n ; i++)
+            for (int i = 0; i <= n; i++)
             {
                 kata1 = kata.Substring(0, i);
                 kata2 = kata.Substring(i, n - i);
@@ -48,7 +59,7 @@ namespace Protoype_Auto_Correct
             return listArrayString;
         }
 
-        public List<string> Insert(List<string[]> kata)
+        public List<string> Insert(List<string[]> kata) // Membuat list string seluruh kemungkinan insertion
         {
             List<string> listString = new List<string>();
             foreach (string[] arrayString in kata)
@@ -59,7 +70,7 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        public List<string> Delete(List<string[]> kata)
+        public List<string> Delete(List<string[]> kata) // Membuat list string seluruh kemungkinan deletion
         {
             kata.RemoveAt(0);
             int n = kata.Count();
@@ -71,7 +82,7 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        public List<string> Substitute(List<string[]> kata)
+        public List<string> Substitute(List<string[]> kata) // Membuat list string seluruh kemungkinan substitution
         {
             int n = kata.Count();
             List<string> listString = new List<string>();
@@ -83,12 +94,12 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        public List<string> Transpose(string kata)
+        public List<string> Transpose(string kata)  // Membuat list string seluruh kemungkinan transposition
         {
             List<string> listString = new List<string>();
             int n = kata.Count();
             char[] huruf = new char[n];
-            for (int i = 0; i < n - 1 ; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 for (int k = 0; k < n; k++)
                 {
@@ -98,6 +109,28 @@ namespace Protoype_Auto_Correct
                 huruf[i + 1] = huruf[i];
                 huruf[i] = m;
                 listString.Add(new string(huruf));
+            }
+            return listString;
+        }
+
+        private List<string> JarakSatu(string kata) // Meng-generate seluruh kemungkinan jarak 1 dari kata
+        {
+            List<string[]> listArrayString = Split(kata);
+            List<string> listString = new List<string>();
+            listString.AddRange(Insert(listArrayString));
+            listString.AddRange(Delete(listArrayString));
+            listString.AddRange(Substitute(listArrayString));
+            listString.AddRange(Transpose(kata));
+            return listString;
+        }
+
+        public List<string> JarakDua(string kata)   // Meng-generate seluruh kemungkinan jarak 2 dari kata
+        {
+            List<string> listString = JarakSatu(kata);
+            int n = listString.Count;
+            for (int i = 0; i < n; i++)
+            {
+                listString.AddRange(JarakSatu(listString[i]));
             }
             return listString;
         }

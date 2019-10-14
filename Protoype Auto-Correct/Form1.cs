@@ -12,15 +12,20 @@ namespace Protoype_Auto_Correct
 {
     public partial class Form1 : Form
     {
+        Correction cs = new Correction();
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void Enter_Click(object sender, EventArgs e)
+        private void btnGenerateJarak1_Click(object sender, EventArgs e)
         {
-            Correction cr = new Correction();
-            hasil.Text = cr.Masuk(key.Text);
+            rtbOutput.Text = cs.Masuk(tbInput.Text);
+        }
+
+        private void btnGenerateJarak2_Click(object sender, EventArgs e)
+        {
+            rtbOutput.Text = cs.MasukJarakDua(tbInput.Text);
         }
     }
 }
