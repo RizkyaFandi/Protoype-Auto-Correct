@@ -27,5 +27,10 @@ namespace Protoype_Auto_Correct
         {
             rtbOutput.Text = cs.MasukJarakDua(tbInput.Text);
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            rtbOutput.Text = cs.MasukSearch(tbInput.Text);
+        }
     }
 }

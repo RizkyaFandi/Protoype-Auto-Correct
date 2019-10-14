@@ -12,17 +12,12 @@ namespace Protoype_Auto_Correct
         public Boolean Cari(string kata)
         {
             Boolean exist = false;
-            var keyword = kata;
-            using (var sr = new StreamReader("kompas.txt"))
+            string toSearch = kata.Trim();
+            foreach (string line in System.IO.File.ReadAllLines("corpus.txt"))
             {
-                while (!sr.EndOfStream)
+                if (line==toSearch)
                 {
-                    var line = sr.ReadLine();
-                    if (String.IsNullOrEmpty(line)) continue;
-                    if (line.IndexOf(keyword, StringComparison.CurrentCultureIgnoreCase) >= 0)
-                    {
-                        exist = true ;
-                    }
+                    exist = true; break;
                 }
             }
             return exist;
