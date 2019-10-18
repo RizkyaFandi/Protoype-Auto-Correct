@@ -51,12 +51,10 @@ namespace Protoype_Auto_Correct
             List<string> listString = new List<string>();
             foreach (string s in listJarak2)
             {
-                if (!src.Cari(s))
+                if (src.Cari(s))
                     listString.Add(s);
             }
             foreach (string s in listString)
-                listJarak2.Remove(s);
-            foreach (string s in listJarak2)
                 text += s + " ";
             return text;
         }

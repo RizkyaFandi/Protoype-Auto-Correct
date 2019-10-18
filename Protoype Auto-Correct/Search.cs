@@ -9,15 +9,25 @@ namespace Protoype_Auto_Correct
 {
     class Search
     {
-        public Boolean Cari(string kata)
+        public bool Cari(string kata)
         {
-            Boolean exist = false;
-            string toSearch = kata.Trim();
-            foreach (string line in System.IO.File.ReadAllLines("corpus.txt"))
+            bool exist = false;
+            kata.Trim();
+            string word = "";
+            int indexof = -1;
+            string line;
+            StreamReader corpus = new StreamReader("corpus.txt");
+            while ((line = corpus.ReadLine()) != null)
             {
-                if (line==toSearch)
+                indexof = line.IndexOf(' ');
+                if (indexof < 0)
+                    continue;
+                else
+                    word = line.Remove(indexof);
+                if (word==kata)
                 {
-                    exist = true; break;
+                    exist = true;
+                    break;
                 }
             }
             return exist;
