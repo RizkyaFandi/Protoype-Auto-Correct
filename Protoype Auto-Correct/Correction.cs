@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,7 @@ namespace Protoype_Auto_Correct
             string text = "";
             List<string> listJarak2 = JarakDua(kata);
             List<string> listString = new List<string>();
+            src.ReadLine();
             foreach (string s in listJarak2)
             {
                 if (src.Cari(s))
