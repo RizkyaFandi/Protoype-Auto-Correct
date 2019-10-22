@@ -38,26 +38,40 @@ namespace Protoype_Auto_Correct
 
         public string MasukJarakDua(string kata)    // Membuat text untuk menampilkan jarak 2 pada Windows Form
         {
-            List<string> listString = JarakDua(kata);
             string text = "";
-            foreach (string s in listString)
-                text += s + " ";
+            List<int> occurrence;
+            List<string> listString = JarakDua(kata, out occurrence);
+            int n = listString.Count;
+            for (int i = 0; i < n; i++)
+                text += "(" + listString[i] + " " + occurrence[i].ToString() + ") ";
             return text;
         }
 
         public string MasukSearch(string kata)
         {
             string text = "";
-            List<string> listJarak2 = JarakDua(kata);
+            string s = "";
+            int occ;
+            List<int> occurrence = new List<int>();
+            List<int> trimmedOcc = new List<int>();
+            List<string> listJarak2 = JarakDua(kata, out occurrence);
             List<string> listString = new List<string>();
-            src.ReadLine();
-            foreach (string s in listJarak2)
+            int n = listJarak2.Count;
+            src.ReadLines();
+            for (int i = 0; i < n; i++)
             {
-                if (src.Cari(s))
+                s = listJarak2[i];
+                if (src.Cari(s, out occ))
+                {
                     listString.Add(s);
+                    trimmedOcc.Add(occurrence[i] * occ);
+                }
             }
-            foreach (string s in listString)
-                text += s + " ";
+            n = listString.Count;
+            for (int i = 0; i < n; i++)
+            {
+                text += "(" + listString[i] + " " + trimmedOcc[i].ToString() + ") ";
+            }
             return text;
         }
 
@@ -143,15 +157,30 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        public List<string> JarakDua(string kata)   // Meng-generate seluruh kemungkinan jarak 2 dari kata
+        public List<string> JarakDua(string kata, out List<int> occurrence)   // Meng-generate seluruh kemungkinan jarak 2 dari kata
         {
             List<string> listString = JarakSatu(kata);
+            List<string> listTrim = new List<string>();
+            List<int> occ = new List<int>();
             int n = listString.Count;
+            int indexof = -1;
             for (int i = 0; i < n; i++)
             {
                 listString.AddRange(JarakSatu(listString[i]));
             }
-            return listString;
+            foreach (string s in listString)
+            {
+                indexof = listTrim.IndexOf(s);
+                if (indexof < 0)
+                {
+                    listTrim.Add(s);
+                    occ.Add(1);
+                }
+                else
+                    occ[indexof]++;
+            }
+            occurrence = occ;
+            return listTrim;
         }
     }
 }

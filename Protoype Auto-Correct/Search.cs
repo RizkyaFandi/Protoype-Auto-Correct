@@ -10,22 +10,30 @@ namespace Protoype_Auto_Correct
     class Search
     {
         private string[] lines;
-        public bool Cari(string kata)
+        public bool Cari(string kata, out int occurrence)
         {
+            string line;
+            int res = BinarySearch(lines, kata);
             kata.Trim();
-            int result = binarySearch(lines, kata);
-            if (result == -1)
+            if (res == -1)
+            {
+                occurrence = -1;
                 return false;
+            }
             else
+            {
+                line = lines[res];
+                occurrence = Convert.ToInt32(line.Remove(0, line.IndexOf(' ') + 1));
                 return true;
+            }
         }
 
-        public void ReadLine()
+        public void ReadLines()
         {
             lines = File.ReadAllLines(@"corpus.txt", Encoding.UTF8);
         }
 
-        public int binarySearch(String[] arr, String x)
+        public int BinarySearch(string[] arr, string x)
         {
             int l = 0, r = arr.Length - 1;
             while (l <= r)
