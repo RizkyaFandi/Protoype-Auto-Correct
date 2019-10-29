@@ -1,58 +1,54 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Protoype_Auto_Correct
 {
-    class Search
+    static class Search
     {
-        private string[] lines;
-        public bool Cari(string kata, out int occurrence)
+        private static List<string> lines;
+        public static List<int> occurrence;
+
+        public static void ReadLines()
         {
-            string line;
-            int res = BinarySearch(lines, kata);
-            kata.Trim();
-            if (res == -1)
+            List<string> listString = new List<string>();
+            List<int> listInt = new List<int>();
+            int indexOf;
+            string[] lines2 = File.ReadAllLines(@"corpus.txt");
+            foreach (string line in lines2)
             {
-                occurrence = -1;
-                return false;
+                indexOf = line.IndexOf(' ');
+                listString.Add(line.Remove(indexOf));
+                listInt.Add(Convert.ToInt32(line.Remove(0, indexOf + 1)));
             }
-            else
-            {
-                line = lines[res];
-                occurrence = Convert.ToInt32(line.Remove(0, line.IndexOf(' ') + 1));
-                return true;
-            }
+            lines = listString;
+            lines.TrimExcess();
+            occurrence = listInt;
+            occurrence.TrimExcess();
         }
 
-        public void ReadLines()
+        public static int BinarySearch(string kata)
         {
-            lines = File.ReadAllLines(@"corpus.txt", Encoding.UTF8);
-        }
-
-        public int BinarySearch(string[] arr, string x)
-        {
-            int l = 0, r = arr.Length - 1;
+            int l = 0, r = lines.Count - 1;
             while (l <= r)
             {
                 int m = l + (r - l) / 2;
-
-                int res = x.CompareTo(arr[m].Remove(arr[m].IndexOf(' ')));
-
+                int res = kata.CompareTo(lines[m]);
                 // Cek jika kata ada di tengah-tengah kumpulan
                 if (res == 0)
-                    return m + 1;
-
+                {
+                    return m;
+                }
                 // Jika x lebih besar, abaikan kiri  
                 if (res > 0)
+                {
                     l = m + 1;
-
+                }
                 // Jika x lebih kecil, abaikan kanan 
                 else
+                {
                     r = m - 1;
+                }
             }
             return -1;
         }

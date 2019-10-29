@@ -1,32 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Protoype_Auto_Correct
 {
-    class Correction
+    static class Correction
     {
-        Search src = new Search();
-
-        public string Masuk(string kata)    // Membuat text untuk menampilkan jarak 1 pada Windows Form
+        public static string Masuk(string kata)    // Membuat text untuk menampilkan jarak 1 pada Windows Form
         {
-            List<string[]> listArrayString = Split(kata);
-            string text = "Splits:" + Environment.NewLine;
-            foreach (string[] arrayString in listArrayString)
+            List<string[]> listSplit = Split(kata);
+            string text = "Split:" + Environment.NewLine;
+            foreach (string[] arrayString in listSplit)
                 text += arrayString[0] + "-" + arrayString[1] + " ";
             text += Environment.NewLine + "Insert:" + Environment.NewLine;
-            List<string> listInsert = Insert(listArrayString);
+            List<string> listInsert = Insert(listSplit);
             foreach (string s in listInsert)
                 text += s + " ";
             text += Environment.NewLine + "Delete:" + Environment.NewLine;
-            List<string> listDelete = Delete(listArrayString);
+            List<string> listDelete = Delete(listSplit);
             foreach (string s in listDelete)
                 text += s + " ";
             text += Environment.NewLine + "Substitute:" + Environment.NewLine;
-            List<string> listSubstitute = Substitute(listArrayString);
+            List<string> listSubstitute = Insert(listSplit);
             foreach (string s in listSubstitute)
                 text += s + " ";
             text += Environment.NewLine + "Transpose:" + Environment.NewLine;
@@ -36,7 +31,7 @@ namespace Protoype_Auto_Correct
             return text;
         }
 
-        public string MasukJarakDua(string kata)    // Membuat text untuk menampilkan jarak 2 pada Windows Form
+        public static string MasukJarakDua(string kata)    // Membuat text untuk menampilkan jarak 2 pada Windows Form
         {
             string text = "";
             List<int> occurrence;
@@ -47,24 +42,24 @@ namespace Protoype_Auto_Correct
             return text;
         }
 
-        public string MasukSearch(string kata)
+        public static string MasukSearch(string kata)
         {
             string text = "";
             string s = "";
-            int occ;
+            int index;
             List<int> occurrence = new List<int>();
             List<int> trimmedOcc = new List<int>();
             List<string> listJarak2 = JarakDua(kata, out occurrence);
             List<string> listString = new List<string>();
             int n = listJarak2.Count;
-            src.ReadLines();
             for (int i = 0; i < n; i++)
             {
                 s = listJarak2[i];
-                if (src.Cari(s, out occ))
+                index = Search.BinarySearch(s);
+                if (index >= 0)
                 {
                     listString.Add(s);
-                    trimmedOcc.Add(occurrence[i] * occ);
+                    trimmedOcc.Add(occurrence[i] * Search.occurrence[index]);
                 }
             }
             n = listString.Count;
@@ -77,57 +72,45 @@ namespace Protoype_Auto_Correct
 
         // Membuat list array string yang berisi seluruh kemungkinan pemotongan kata
         // Misal: aba menjadi [][aba], [a][ba], [ab][a], dan [aba][] 
-        public List<string[]> Split(string kata)
+        private static List<string[]> Split(string kata)
         {
             int n = kata.Count();
-            List<string[]> listArrayString = new List<string[]>();
+            List<string[]> listSplit = new List<string[]>();
             string kata1 = "";
             string kata2 = "";
             for (int i = 0; i <= n; i++)
             {
                 kata1 = kata.Substring(0, i);
                 kata2 = kata.Substring(i, n - i);
-                listArrayString.Add(new string[] { kata1, kata2 });
+                listSplit.Add(new string[] { kata1, kata2 });
             }
-            return listArrayString;
+            return listSplit;
         }
 
-        public List<string> Insert(List<string[]> kata) // Membuat list string seluruh kemungkinan insertion
+        private static List<string> Insert(List<string[]> listSplit) // Membuat list string seluruh kemungkinan insertion
         {
-            List<string> listString = new List<string>();
-            foreach (string[] arrayString in kata)
+            List<string> listInsert = new List<string>();
+            foreach (string[] arrayString in listSplit)
             {
                 for (char c = 'a'; c <= 'z'; c++)
-                    listString.Add(arrayString[0] + c + arrayString[1]);
+                    listInsert.Add(arrayString[0] + c + arrayString[1]);
             }
-            return listString;
+            return listInsert;
         }
 
-        public List<string> Delete(List<string[]> kata) // Membuat list string seluruh kemungkinan deletion
+        private static List<string> Delete(List<string[]> listSplit) // Membuat list string seluruh kemungkinan deletion
         {
-            kata.RemoveAt(0);
-            int n = kata.Count();
-            List<string> listString = new List<string>();
+            listSplit.RemoveAt(0);
+            int n = listSplit.Count();
+            List<string> listDelete = new List<string>();
             for (int i = 0; i < n; i++)
-                kata[i][0] = kata[i][0].Remove(kata[i][0].Count() - 1);
-            foreach (string[] arrayString in kata)
-                listString.Add(arrayString[0] + arrayString[1]);
-            return listString;
+                listSplit[i][0] = listSplit[i][0].Remove(listSplit[i][0].Count() - 1);
+            foreach (string[] arrayString in listSplit)
+                listDelete.Add(arrayString[0] + arrayString[1]);
+            return listDelete;
         }
 
-        public List<string> Substitute(List<string[]> kata) // Membuat list string seluruh kemungkinan substitution
-        {
-            int n = kata.Count();
-            List<string> listString = new List<string>();
-            foreach (string[] arrayString in kata)
-            {
-                for (char c = 'a'; c <= 'z'; c++)
-                    listString.Add(arrayString[0] + c + arrayString[1]);
-            }
-            return listString;
-        }
-
-        public List<string> Transpose(string kata)  // Membuat list string seluruh kemungkinan transposition
+        private static List<string> Transpose(string kata)  // Membuat list string seluruh kemungkinan transposition
         {
             List<string> listString = new List<string>();
             int n = kata.Count();
@@ -146,18 +129,18 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        private List<string> JarakSatu(string kata) // Meng-generate seluruh kemungkinan jarak 1 dari kata
+        private static List<string> JarakSatu(string kata) // Meng-generate seluruh kemungkinan jarak 1 dari kata
         {
-            List<string[]> listArrayString = Split(kata);
+            List<string[]> listSplit = Split(kata);
             List<string> listString = new List<string>();
-            listString.AddRange(Insert(listArrayString));
-            listString.AddRange(Delete(listArrayString));
-            listString.AddRange(Substitute(listArrayString));
+            listString.AddRange(Insert(listSplit));
+            listString.AddRange(Delete(listSplit));
+            listString.AddRange(Insert(listSplit));
             listString.AddRange(Transpose(kata));
             return listString;
         }
 
-        public List<string> JarakDua(string kata, out List<int> occurrence)   // Meng-generate seluruh kemungkinan jarak 2 dari kata
+        private static List<string> JarakDua(string kata, out List<int> occurrence)   // Meng-generate seluruh kemungkinan jarak 2 dari kata
         {
             List<string> listString = JarakSatu(kata);
             List<string> listTrim = new List<string>();
