@@ -44,28 +44,55 @@ namespace Protoype_Auto_Correct
 
         public static string MasukSearch(string kata)
         {
+            List<string> kalimat = new List<string>();
+            int j = kata.Count(f => f == ' ');
             string text = "";
-            string s = "";
-            int index;
-            List<int> occurrence = new List<int>();
-            List<int> trimmedOcc = new List<int>();
-            List<string> listJarak2 = JarakDua(kata, out occurrence);
-            List<string> listString = new List<string>();
-            int n = listJarak2.Count;
-            for (int i = 0; i < n; i++)
+            do
             {
-                s = listJarak2[i];
-                index = Search.BinarySearch(s);
-                if (index >= 0)
+                int indexOf = kata.IndexOf(' ');
+                if (indexOf > 0)
                 {
-                    listString.Add(s);
-                    trimmedOcc.Add(occurrence[i] * Search.occurrence[index]);
+                    kalimat.Add(kata.Remove(indexOf));
+                    kata = kata.Remove(0, indexOf + 1);
                 }
+                else
+                    kalimat.Add(kata);
+                j--;
             }
-            n = listString.Count;
-            for (int i = 0; i < n; i++)
+            while (j >= 0);
+
+            foreach (string a in kalimat)
             {
-                text += "(" + listString[i] + " " + trimmedOcc[i].ToString() + ") ";
+                int cek = Search.BinarySearch(a);
+                if (cek > 5)
+                {
+                    text += a + " ";
+                }
+                else
+                {
+                    string s = "";
+                    string word = "";
+                    int index;
+                    List<int> occurrence = new List<int>();
+                    List<int> trimmedOcc = new List<int>();
+                    List<string> listJarak2 = JarakDua(a, out occurrence);
+                    List<string> listString = new List<string>();
+                    int n = listJarak2.Count;
+                    for (int i = 0; i < n; i++)
+                    {
+                        s = listJarak2[i];
+                        index = Search.BinarySearch(s);
+                        if (index >= 0)
+                        {
+                            listString.Add(s);
+                            trimmedOcc.Add(occurrence[i] * Search.occurrence[index]);
+                        }
+                    }
+                    int maxValue = trimmedOcc.Max();
+                    int maxIndex = trimmedOcc.IndexOf(maxValue);
+                    word = listString[maxIndex];
+                    text += word + " ";
+                }
             }
             return text;
         }
