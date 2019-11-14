@@ -25,5 +25,10 @@ namespace Protoype_Auto_Correct
         {
             rtbOutput.Text = Correction.MasukSearch(tbInput.Text);
         }
+
+        private void btnKoreksiTeks_Click(object sender, EventArgs e)
+        {
+            rtbOutput.Text = Correction.MasukTeks(tbInput.Text);
+        }
     }
 }

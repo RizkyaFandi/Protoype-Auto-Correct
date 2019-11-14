@@ -44,6 +44,34 @@ namespace Protoype_Auto_Correct
 
         public static string MasukSearch(string kata)
         {
+            string text = "";
+            string s = "";
+            int index;
+            List<int> occurrence = new List<int>();
+            List<int> trimmedOcc = new List<int>();
+            List<string> listJarak2 = JarakDua(kata, out occurrence);
+            List<string> listString = new List<string>();
+            int n = listJarak2.Count;
+            for (int i = 0; i < n; i++)
+            {
+                s = listJarak2[i];
+                index = Search.BinarySearch(s);
+                if (index >= 0)
+                {
+                    listString.Add(s);
+                    trimmedOcc.Add(occurrence[i] * Search.occurrence[index]);
+                }
+            }
+            n = listString.Count;
+            for (int i = 0; i < n; i++)
+            {
+                text += "(" + listString[i] + " " + trimmedOcc[i].ToString() + ") ";
+            }
+            return text;
+        }
+
+        public static string MasukTeks(string kata)
+        {
             List<string> kalimat = new List<string>();
             int j = kata.Count(f => f == ' ');
             string text = "";
