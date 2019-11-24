@@ -7,7 +7,6 @@ namespace Protoype_Auto_Correct
 {
     static class Correction
     {
-
         public static string MasukTeks(string input)
         {
             int n = input.Count(f => f == ' ') + 1;
@@ -25,6 +24,7 @@ namespace Protoype_Auto_Correct
                 else
                     words[i] = input;
             }
+            // TO DO: LAKUKAN THREAD DI SINI
             int t;
             if (n <= 96)
                 t = n;
@@ -45,6 +45,7 @@ namespace Protoype_Auto_Correct
             return text;
         }
 
+        // TO DO: SESUAIKAN KODE
         private static void Correct(object obj)
         {
             // Correct() Parameters
@@ -136,12 +137,10 @@ namespace Protoype_Auto_Correct
             List<string> listString = new List<string>();
             int n = kata.Count();
             char[] huruf = new char[n];
-
-            for (int j = 0; j < n - 1; j++)
+            for (int k = 0; k < n; k++)
             {
-                huruf[j] = kata[j];
+                huruf[k] = kata[k];
             }
-
             for (int i = 0; i < n - 1; i++)
             {
                 char m = huruf[i + 1];

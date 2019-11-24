@@ -32,9 +32,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnkoreksi = new System.Windows.Forms.Button();
-            this.tboutput = new System.Windows.Forms.TextBox();
             this.tbinput = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tboutput = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -79,25 +79,13 @@
             this.btnkoreksi.UseVisualStyleBackColor = false;
             this.btnkoreksi.Click += new System.EventHandler(this.btnkoreksi_Click);
             // 
-            // tboutput
-            // 
-            this.tboutput.BackColor = System.Drawing.Color.AliceBlue;
-            this.tboutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tboutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.tboutput.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.tboutput.Location = new System.Drawing.Point(8, 365);
-            this.tboutput.Multiline = true;
-            this.tboutput.Name = "tboutput";
-            this.tboutput.Size = new System.Drawing.Size(986, 185);
-            this.tboutput.TabIndex = 7;
-            // 
             // tbinput
             // 
             this.tbinput.BackColor = System.Drawing.Color.Cyan;
             this.tbinput.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbinput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.tbinput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbinput.Location = new System.Drawing.Point(8, 98);
+            this.tbinput.Location = new System.Drawing.Point(13, 98);
             this.tbinput.Multiline = true;
             this.tbinput.Name = "tbinput";
             this.tbinput.Size = new System.Drawing.Size(986, 185);
@@ -120,6 +108,20 @@
             this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
             this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
+            // tboutput
+            // 
+            this.tboutput.BackColor = System.Drawing.Color.LightCyan;
+            this.tboutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tboutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.tboutput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tboutput.Location = new System.Drawing.Point(12, 360);
+            this.tboutput.Multiline = true;
+            this.tboutput.Name = "tboutput";
+            this.tboutput.ReadOnly = true;
+            this.tboutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tboutput.Size = new System.Drawing.Size(986, 185);
+            this.tboutput.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -127,9 +129,9 @@
             this.BackgroundImage = global::Protoype_Auto_Correct.Properties.Resources._8W3JfzOpJiNZBnDYXHpQ3TGSMiZSG782uNXuAsrA;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1010, 557);
+            this.Controls.Add(this.tboutput);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnkoreksi);
-            this.Controls.Add(this.tboutput);
             this.Controls.Add(this.tbinput);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
@@ -149,9 +151,9 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnkoreksi;
-        private System.Windows.Forms.TextBox tboutput;
         private System.Windows.Forms.TextBox tbinput;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TextBox tboutput;
     }
 }
 
