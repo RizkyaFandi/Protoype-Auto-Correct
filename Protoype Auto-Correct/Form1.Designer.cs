@@ -28,89 +28,117 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbInput = new System.Windows.Forms.TextBox();
-            this.btnGenerateJarak1 = new System.Windows.Forms.Button();
-            this.btnGenerateJarak2 = new System.Windows.Forms.Button();
-            this.rtbOutput = new System.Windows.Forms.RichTextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.btnKoreksiTeks = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnkoreksi = new System.Windows.Forms.Button();
+            this.tboutput = new System.Windows.Forms.TextBox();
+            this.tbinput = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
-            // tbInput
+            // pictureBox1
             // 
-            this.tbInput.Location = new System.Drawing.Point(12, 12);
-            this.tbInput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tbInput.Name = "tbInput";
-            this.tbInput.Size = new System.Drawing.Size(1045, 26);
-            this.tbInput.TabIndex = 0;
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::Protoype_Auto_Correct.Properties.Resources.IClogo;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(76, 70);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
-            // btnGenerateJarak1
+            // label1
             // 
-            this.btnGenerateJarak1.Location = new System.Drawing.Point(12, 48);
-            this.btnGenerateJarak1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnGenerateJarak1.Name = "btnGenerateJarak1";
-            this.btnGenerateJarak1.Size = new System.Drawing.Size(145, 29);
-            this.btnGenerateJarak1.TabIndex = 1;
-            this.btnGenerateJarak1.Text = "Generate Jarak 1";
-            this.btnGenerateJarak1.UseVisualStyleBackColor = true;
-            this.btnGenerateJarak1.Click += new System.EventHandler(this.btnGenerateJarak1_Click);
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Freestyle Script", 24F);
+            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label1.Location = new System.Drawing.Point(94, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(229, 47);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Indonesia Correction";
             // 
-            // btnGenerateJarak2
+            // btnkoreksi
             // 
-            this.btnGenerateJarak2.Location = new System.Drawing.Point(166, 48);
-            this.btnGenerateJarak2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnGenerateJarak2.Name = "btnGenerateJarak2";
-            this.btnGenerateJarak2.Size = new System.Drawing.Size(145, 29);
-            this.btnGenerateJarak2.TabIndex = 3;
-            this.btnGenerateJarak2.Text = "Generate Jarak 2";
-            this.btnGenerateJarak2.UseVisualStyleBackColor = true;
-            this.btnGenerateJarak2.Click += new System.EventHandler(this.btnGenerateJarak2_Click);
+            this.btnkoreksi.BackColor = System.Drawing.Color.MediumBlue;
+            this.btnkoreksi.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnkoreksi.FlatAppearance.BorderSize = 0;
+            this.btnkoreksi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnkoreksi.Font = new System.Drawing.Font("Nirmala UI", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.btnkoreksi.ForeColor = System.Drawing.Color.White;
+            this.btnkoreksi.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnkoreksi.Location = new System.Drawing.Point(466, 305);
+            this.btnkoreksi.Name = "btnkoreksi";
+            this.btnkoreksi.Size = new System.Drawing.Size(123, 39);
+            this.btnkoreksi.TabIndex = 8;
+            this.btnkoreksi.Text = "Correction";
+            this.btnkoreksi.UseVisualStyleBackColor = false;
+            this.btnkoreksi.Click += new System.EventHandler(this.btnkoreksi_Click);
             // 
-            // rtbOutput
+            // tboutput
             // 
-            this.rtbOutput.Location = new System.Drawing.Point(12, 92);
-            this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.rtbOutput.Name = "rtbOutput";
-            this.rtbOutput.Size = new System.Drawing.Size(1045, 536);
-            this.rtbOutput.TabIndex = 0;
-            this.rtbOutput.Text = "Selamat datang di Prototype Auto-Correct.";
+            this.tboutput.BackColor = System.Drawing.Color.AliceBlue;
+            this.tboutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tboutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.tboutput.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.tboutput.Location = new System.Drawing.Point(8, 365);
+            this.tboutput.Multiline = true;
+            this.tboutput.Name = "tboutput";
+            this.tboutput.Size = new System.Drawing.Size(986, 185);
+            this.tboutput.TabIndex = 7;
             // 
-            // btnSearch
+            // tbinput
             // 
-            this.btnSearch.Location = new System.Drawing.Point(318, 48);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(145, 29);
-            this.btnSearch.TabIndex = 4;
-            this.btnSearch.Text = "Kandidat Koreksi";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.tbinput.BackColor = System.Drawing.Color.Cyan;
+            this.tbinput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbinput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.tbinput.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbinput.Location = new System.Drawing.Point(8, 98);
+            this.tbinput.Multiline = true;
+            this.tbinput.Name = "tbinput";
+            this.tbinput.Size = new System.Drawing.Size(986, 185);
+            this.tbinput.TabIndex = 6;
+            this.tbinput.Enter += new System.EventHandler(this.tbinput_Enter);
+            this.tbinput.Leave += new System.EventHandler(this.tbinput_Leave);
             // 
-            // btnKoreksiTeks
+            // pictureBox2
             // 
-            this.btnKoreksiTeks.Location = new System.Drawing.Point(469, 48);
-            this.btnKoreksiTeks.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.btnKoreksiTeks.Name = "btnKoreksiTeks";
-            this.btnKoreksiTeks.Size = new System.Drawing.Size(145, 29);
-            this.btnKoreksiTeks.TabIndex = 5;
-            this.btnKoreksiTeks.Text = "Koreksi Teks";
-            this.btnKoreksiTeks.UseVisualStyleBackColor = true;
-            this.btnKoreksiTeks.Click += new System.EventHandler(this.btnKoreksiTeks_Click);
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImage = global::Protoype_Auto_Correct.Properties.Resources.closeAC;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox2.Location = new System.Drawing.Point(942, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(56, 56);
+            this.pictureBox2.TabIndex = 9;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            this.pictureBox2.MouseEnter += new System.EventHandler(this.pictureBox2_MouseEnter);
+            this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1069, 640);
-            this.Controls.Add(this.btnKoreksiTeks);
-            this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.btnGenerateJarak2);
-            this.Controls.Add(this.rtbOutput);
-            this.Controls.Add(this.btnGenerateJarak1);
-            this.Controls.Add(this.tbInput);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BackgroundImage = global::Protoype_Auto_Correct.Properties.Resources._8W3JfzOpJiNZBnDYXHpQ3TGSMiZSG782uNXuAsrA;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(1010, 557);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.btnkoreksi);
+            this.Controls.Add(this.tboutput);
+            this.Controls.Add(this.tbinput);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Prototype Auto-Correct";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,12 +146,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox tbInput;
-        private System.Windows.Forms.Button btnGenerateJarak1;
-        private System.Windows.Forms.Button btnGenerateJarak2;
-        private System.Windows.Forms.RichTextBox rtbOutput;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnKoreksiTeks;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnkoreksi;
+        private System.Windows.Forms.TextBox tboutput;
+        private System.Windows.Forms.TextBox tbinput;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

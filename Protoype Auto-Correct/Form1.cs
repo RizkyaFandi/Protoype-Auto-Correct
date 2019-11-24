@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Protoype_Auto_Correct
@@ -11,24 +12,34 @@ namespace Protoype_Auto_Correct
             Search.ReadLines();
         }
 
-        private void btnGenerateJarak1_Click(object sender, EventArgs e)
+        private void btnkoreksi_Click(object sender, EventArgs e)
         {
-            rtbOutput.Text = Correction.Masuk(tbInput.Text);
+            tboutput.Text = Correction.MasukTeks(tbinput.Text);
         }
 
-        private void btnGenerateJarak2_Click(object sender, EventArgs e)
+        private void pictureBox2_Click(object sender, EventArgs e)
         {
-            rtbOutput.Text = Correction.MasukJarakDua(tbInput.Text);
+            Application.Exit();
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
+        private void pictureBox2_MouseEnter(object sender, EventArgs e)
         {
-            rtbOutput.Text = Correction.MasukSearch(tbInput.Text);
+            pictureBox2.BackgroundImage = global::Protoype_Auto_Correct.Properties.Resources.closeAC1;
         }
 
-        private void btnKoreksiTeks_Click(object sender, EventArgs e)
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
         {
-            rtbOutput.Text = Correction.MasukTeks(tbInput.Text);
+            pictureBox2.BackgroundImage = global::Protoype_Auto_Correct.Properties.Resources.closeAC;
+        }
+
+        private void tbinput_Enter(object sender, EventArgs e)
+        {
+            tbinput.BackColor = ColorTranslator.FromHtml("#E0FFFF");
+        }
+
+        private void tbinput_Leave(object sender, EventArgs e)
+        {
+            tbinput.BackColor = ColorTranslator.FromHtml("#00FFFF");
         }
     }
 }

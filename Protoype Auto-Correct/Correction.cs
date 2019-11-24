@@ -1,128 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Protoype_Auto_Correct
 {
     static class Correction
     {
-        public static string Masuk(string kata)    // Membuat text untuk menampilkan jarak 1 pada Windows Form
-        {
-            List<string[]> listSplit = Split(kata);
-            string text = "Split:" + Environment.NewLine;
-            foreach (string[] arrayString in listSplit)
-                text += arrayString[0] + "-" + arrayString[1] + " ";
-            text += Environment.NewLine + "Insert:" + Environment.NewLine;
-            List<string> listInsert = Insert(listSplit);
-            foreach (string s in listInsert)
-                text += s + " ";
-            text += Environment.NewLine + "Delete:" + Environment.NewLine;
-            List<string> listDelete = Delete(listSplit);
-            foreach (string s in listDelete)
-                text += s + " ";
-            text += Environment.NewLine + "Substitute:" + Environment.NewLine;
-            List<string> listSubstitute = Insert(listSplit);
-            foreach (string s in listSubstitute)
-                text += s + " ";
-            text += Environment.NewLine + "Transpose:" + Environment.NewLine;
-            List<string> listTranspose = Transpose(kata);
-            foreach (string s in listTranspose)
-                text += s + " ";
-            return text;
-        }
 
-        public static string MasukJarakDua(string kata)    // Membuat text untuk menampilkan jarak 2 pada Windows Form
+        public static string MasukTeks(string input)
         {
+            int n = input.Count(f => f == ' ') + 1;
+            int indexOf;
+            string[] words = new string[n];
             string text = "";
-            List<int> occurrence;
-            List<string> listString = JarakDua(kata, out occurrence);
-            int n = listString.Count;
             for (int i = 0; i < n; i++)
-                text += "(" + listString[i] + " " + occurrence[i].ToString() + ") ";
+            {
+                indexOf = input.IndexOf(' ');
+                if (indexOf > 0)
+                {
+                    words[i] = input.Remove(indexOf);
+                    input = input.Remove(0, indexOf + 1);
+                }
+                else
+                    words[i] = input;
+            }
+            int t;
+            if (n <= 96)
+                t = n;
+            else
+                t = 96;
+            Thread[] threads = new Thread[t];
+            object obj;
+            for (int i = 0; i < t; i++)
+            {
+                threads[i] = new Thread(Correct);
+                obj = new object[] { words as object, i * n / t as object, (i + 1) * n / t as object } as object;
+                threads[i].Start(obj);
+            }
+            foreach (Thread thread in threads)
+                thread.Join();
+            foreach (string word in words)
+                text += word + " ";
             return text;
         }
 
-        public static string MasukSearch(string kata)
+        private static void Correct(object obj)
         {
-            string text = "";
+            // Correct() Parameters
+            object[] array = obj as object[];
+            string[] words = array[0] as string[];
+            int i = Convert.ToInt32(array[1]);
+            int n = Convert.ToInt32(array[2]);
+            // End Correct() Parameters
             string s = "";
             int index;
             List<int> occurrence = new List<int>();
             List<int> trimmedOcc = new List<int>();
-            List<string> listJarak2 = JarakDua(kata, out occurrence);
+            List<string> listJarak2;
             List<string> listString = new List<string>();
-            int n = listJarak2.Count;
-            for (int i = 0; i < n; i++)
+            for (; i < n; i++)
             {
-                s = listJarak2[i];
-                index = Search.BinarySearch(s);
-                if (index >= 0)
+                int cek = Search.BinarySearch(words[i]);
+                // Kata tidak ada di Corpus, lakukan koreksi
+                if (cek == -1)
                 {
-                    listString.Add(s);
-                    trimmedOcc.Add(occurrence[i] * Search.occurrence[index]);
-                }
-            }
-            n = listString.Count;
-            for (int i = 0; i < n; i++)
-            {
-                text += "(" + listString[i] + " " + trimmedOcc[i].ToString() + ") ";
-            }
-            return text;
-        }
-
-        public static string MasukTeks(string kata)
-        {
-            List<string> kalimat = new List<string>();
-            int j = kata.Count(f => f == ' ');
-            string text = "";
-            do
-            {
-                int indexOf = kata.IndexOf(' ');
-                if (indexOf > 0)
-                {
-                    kalimat.Add(kata.Remove(indexOf));
-                    kata = kata.Remove(0, indexOf + 1);
-                }
-                else
-                    kalimat.Add(kata);
-                j--;
-            }
-            while (j >= 0);
-
-            foreach (string a in kalimat)
-            {
-                int cek = Search.BinarySearch(a);
-                if (cek > 5)
-                {
-                    text += a + " ";
-                }
-                else
-                {
-                    string s = "";
-                    string word = "";
-                    int index;
-                    List<int> occurrence = new List<int>();
-                    List<int> trimmedOcc = new List<int>();
-                    List<string> listJarak2 = JarakDua(a, out occurrence);
-                    List<string> listString = new List<string>();
-                    int n = listJarak2.Count;
-                    for (int i = 0; i < n; i++)
+                    listJarak2 = JarakDua(words[i], out occurrence);
+                    int c = listJarak2.Count;
+                    for (int j = 0; j < c; j++)
                     {
-                        s = listJarak2[i];
+                        s = listJarak2[j];
                         index = Search.BinarySearch(s);
                         if (index >= 0)
                         {
                             listString.Add(s);
-                            trimmedOcc.Add(occurrence[i] * Search.occurrence[index]);
+                            trimmedOcc.Add(occurrence[j] * Search.occurrence[index]);
                         }
                     }
-                    int maxValue = trimmedOcc.Max();
-                    int maxIndex = trimmedOcc.IndexOf(maxValue);
-                    word = listString[maxIndex];
-                    text += word + " ";
+                    if (listString.Count() == 0)
+                        continue;
+                    int maxIndex = 0;
+                    c = listString.Count();
+                    for (int j = 1; j < c; j++)
+                    {
+                        if (trimmedOcc[j] > trimmedOcc[maxIndex])
+                            maxIndex = j;
+                    }
+                    words[i] = listString[maxIndex];
                 }
             }
-            return text;
         }
 
         // Membuat list array string yang berisi seluruh kemungkinan pemotongan kata
@@ -170,12 +136,14 @@ namespace Protoype_Auto_Correct
             List<string> listString = new List<string>();
             int n = kata.Count();
             char[] huruf = new char[n];
+
+            for (int j = 0; j < n - 1; j++)
+            {
+                huruf[j] = kata[j];
+            }
+
             for (int i = 0; i < n - 1; i++)
             {
-                for (int k = 0; k < n; k++)
-                {
-                    huruf[k] = kata[k];
-                }
                 char m = huruf[i + 1];
                 huruf[i + 1] = huruf[i];
                 huruf[i] = m;
