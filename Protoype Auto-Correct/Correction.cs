@@ -11,9 +11,8 @@ namespace Protoype_Auto_Correct
         public static string MasukTeks(string input)
         {
             int n = input.Count(f => f == ' ') + 1;
-            string[] p = File.ReadAllLines(@"tandabaca.txt");
-
-            int indexOf;
+            int indexOf, symbolIndex;
+            char[] symbols = { '.', ',', '?', '!', '"', '(', ')', ':', '&', '+', '*', '^', '%', '=', ';', '/', '<', '>', '{', '}', '[', ']' };
             string[] words = new string[n];
             string text = "";
             for (int i = 0; i < n; i++)
@@ -22,19 +21,25 @@ namespace Protoype_Auto_Correct
                 if (indexOf > 0)
                 {
                     string kata = input.Remove(indexOf);
-                    for(int g = 0; g < 23; g++)
+                    foreach (char symbol in symbols)
                     {
-                        int h = kata.IndexOf(p[g]);
-                        if (h > 0)
-                        {
-                            kata = kata.Remove(h, 1);
-                        }
+                        symbolIndex = kata.IndexOf(symbol);
+                        if (symbolIndex > 0)
+                            kata = kata.Remove(symbolIndex, 1);
                     }
                     words[i] = kata;
                     input = input.Remove(0, indexOf + 1);
                 }
                 else
+                {
                     words[i] = input;
+                    foreach (char symbol in symbols)
+                    {
+                        symbolIndex = words[i].IndexOf(symbol);
+                        if (symbolIndex > 0)
+                            words[i] = words[i].Remove(symbolIndex, 1);
+                    }
+                }
             }
             // TO DO: LAKUKAN THREAD DI SINI
             int t;

@@ -6,6 +6,9 @@ namespace Protoype_Auto_Correct
 {
     public partial class Form1 : Form
     {
+        private bool mouseDown;
+        private Point lastLocation;
+
         public Form1()
         {
             InitializeComponent();
@@ -40,6 +43,27 @@ namespace Protoype_Auto_Correct
         private void tbinput_Leave(object sender, EventArgs e)
         {
             tbinput.BackColor = ColorTranslator.FromHtml("#00FFFF");
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                Location = new Point(
+                    Location.X - lastLocation.X + e.X, Location.Y - lastLocation.Y + e.Y);
+                Update();
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
         }
     }
 }
