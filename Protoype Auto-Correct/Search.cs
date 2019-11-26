@@ -9,12 +9,15 @@ namespace Protoype_Auto_Correct
         private static List<string> lines;
         public static List<int> occurrence;
 
+        /// <summary>
+        /// Membaca seluruh line corpus dan menyimpannya ke list string Search.lines
+        /// </summary>
         public static void ReadLines()
         {
             List<string> listString = new List<string>();
             List<int> listInt = new List<int>();
             int indexOf;
-            string[] lines2 = File.ReadAllLines(@"corpus.txt");
+            string[] lines2 = File.ReadAllLines(Path.GetFullPath(@"..\..\")+"\\corpus.txt");
             foreach (string line in lines2)
             {
                 indexOf = line.IndexOf(' ');
@@ -27,6 +30,11 @@ namespace Protoype_Auto_Correct
             occurrence.TrimExcess();
         }
 
+        /// <summary>
+        /// Melakukan binary search terhadap sebuah kata, apakah ada di dalam corpus.
+        /// </summary>
+        /// <param name="kata">Kata yang hendak dicari.</param>
+        /// <returns>Indeks kata. Bila tidak ditemukan, nilainya -1</returns>
         public static int BinarySearch(string kata)
         {
             int l = 0, r = lines.Count - 1;

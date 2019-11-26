@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -8,8 +7,14 @@ namespace Protoype_Auto_Correct
 {
     static class Correction
     {
+        /// <summary>
+        /// Mengembalikan string hasil koreksi input.
+        /// </summary>
+        /// <param name="input">String yang hendak dikoreksi.</param>
+        /// <returns></returns>
         public static string MasukTeks(string input)
         {
+            // Memetakan string input ke array string.
             int n = input.Count(f => f == ' ') + 1;
             int indexOf, symbolIndex;
             char[] symbols = { '.', ',', '?', '!', '"', '(', ')', ':', '&', '+', '*', '^', '%', '=', ';', '/', '<', '>', '{', '}', '[', ']' };
@@ -41,7 +46,7 @@ namespace Protoype_Auto_Correct
                     }
                 }
             }
-            // TO DO: LAKUKAN THREAD DI SINI
+            // Melakukan threading.
             int t;
             if (n <= 96)
                 t = n;
@@ -62,25 +67,30 @@ namespace Protoype_Auto_Correct
             return text;
         }
 
-        // TO DO: SESUAIKAN KODE
+        /// <summary>
+        /// Melakukan koreksi terhadap potongan array string.
+        /// </summary>
+        /// <param name="obj">Objek berisi array string yang hendak dikoreksi beserta indeksnya.</param>
         private static void Correct(object obj)
         {
-            // Correct() Parameters
+            // Membongkar parameter.
             object[] array = obj as object[];
             string[] words = array[0] as string[];
             int i = Convert.ToInt32(array[1]);
             int n = Convert.ToInt32(array[2]);
-            // End Correct() Parameters
+            // Melakukan koreksi.
             string s = "";
             int index;
             List<int> occurrence = new List<int>();
-            List<int> trimmedOcc = new List<int>();
+            List<int> trimmedOcc;
             List<string> listJarak2;
-            List<string> listString = new List<string>();
+            List<string> listString;
             for (; i < n; i++)
             {
+                trimmedOcc = new List<int>();
+                listString = new List<string>();
                 int cek = Search.BinarySearch(words[i]);
-                // Kata tidak ada di Corpus, lakukan koreksi
+                // Jika kata tidak ada di Corpus, lakukan koreksi.
                 if (cek == -1)
                 {
                     listJarak2 = JarakDua(words[i], out occurrence);
@@ -126,7 +136,12 @@ namespace Protoype_Auto_Correct
             return listSplit;
         }
 
-        private static List<string> Insert(List<string[]> listSplit) // Membuat list string seluruh kemungkinan insertion
+        /// <summary>
+        /// Mengembalikan list string seluruh kemungkinan insertion.
+        /// </summary>
+        /// <param name="listSplit">Kata yang telah di-split.</param>
+        /// <returns></returns>
+        private static List<string> Insert(List<string[]> listSplit)
         {
             List<string> listInsert = new List<string>();
             foreach (string[] arrayString in listSplit)
@@ -137,7 +152,12 @@ namespace Protoype_Auto_Correct
             return listInsert;
         }
 
-        private static List<string> Delete(List<string[]> listSplit) // Membuat list string seluruh kemungkinan deletion
+        /// <summary>
+        /// Mengembalikan list string seluruh kemungkinan deletion.
+        /// </summary>
+        /// <param name="listSplit">Kata yang telah di-split.</param>
+        /// <returns></returns>
+        private static List<string> Delete(List<string[]> listSplit) // Membuat list string seluruh kemungkinan deletion.
         {
             listSplit.RemoveAt(0);
             int n = listSplit.Count();
@@ -149,6 +169,11 @@ namespace Protoype_Auto_Correct
             return listDelete;
         }
 
+        /// <summary>
+        /// Mengembalikan list string seluruh kemungkinan transpose.
+        /// </summary>
+        /// <param name="kata">Kata yang hendak di-transpose.</param>
+        /// <returns></returns>
         private static List<string> Transpose(string kata)  // Membuat list string seluruh kemungkinan transposition
         {
             List<string> listString = new List<string>();
@@ -157,9 +182,7 @@ namespace Protoype_Auto_Correct
             for (int i = 0; i < n - 1; i++)
             {
                 for (int k = 0; k < n; k++)
-                {
                     huruf[k] = kata[k];
-                }
                 char m = huruf[i + 1];
                 huruf[i + 1] = huruf[i];
                 huruf[i] = m;
@@ -168,7 +191,12 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        private static List<string> JarakSatu(string kata) // Meng-generate seluruh kemungkinan jarak 1 dari kata
+        /// <summary>
+        /// Mengembalikan list string seluruh kemungkinan jarak satu.
+        /// </summary>
+        /// <param name="kata">Kata yang hendak dioperasikan jarak satu.</param>
+        /// <returns></returns>
+        private static List<string> JarakSatu(string kata)
         {
             List<string[]> listSplit = Split(kata);
             List<string> listString = new List<string>();
@@ -179,30 +207,44 @@ namespace Protoype_Auto_Correct
             return listString;
         }
 
-        private static List<string> JarakDua(string kata, out List<int> occurrence)   // Meng-generate seluruh kemungkinan jarak 2 dari kata
+        /// <summary>
+        /// Mengembalikan list string seluruh kemungkinan jarak dua.
+        /// </summary>
+        /// <param name="kata">Kata yang hendak dioperasikan jarak dua.</param>
+        /// <param name="occurrence">List int untuk menampung jumlah kemunculan sebuah generate.</param>
+        /// <returns></returns>
+        private static List<string> JarakDua(string kata, out List<int> occurrence)
         {
             List<string> listString = JarakSatu(kata);
             List<string> listTrim = new List<string>();
             List<int> occ = new List<int>();
-            int n = listString.Count;
-            int indexof = -1;
+            int n, l;
+            l = kata.Length;
+            Condense(listString, listTrim, occ, 1454);
+            listString = new List<string>();
+            n = listTrim.Count;
             for (int i = 0; i < n; i++)
-            {
-                listString.AddRange(JarakSatu(listString[i]));
-            }
-            foreach (string s in listString)
-            {
-                indexof = listTrim.IndexOf(s);
-                if (indexof < 0)
-                {
-                    listTrim.Add(s);
-                    occ.Add(1);
-                }
-                else
-                    occ[indexof]++;
-            }
+                listString.AddRange(JarakSatu(listTrim[i]));
+            Condense(listString, listTrim, occ, 1);
             occurrence = occ;
             return listTrim;
+        }
+
+        // Kode berulang dari metode JarakDua(), dibuat untuk meringkas kode.
+        private static void Condense(List<string> listString, List<string> listTrim, List<int> occ, int val)
+        {
+            int indexOf;
+            foreach (string s in listString)
+            {
+                indexOf = listTrim.IndexOf(s);
+                if (indexOf < 0)
+                {
+                    listTrim.Add(s);
+                    occ.Add(val);
+                }
+                else
+                    occ[indexOf] += val;
+            }
         }
     }
 }
