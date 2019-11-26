@@ -58,9 +58,9 @@
             this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.label1.Location = new System.Drawing.Point(94, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(229, 47);
+            this.label1.Size = new System.Drawing.Size(240, 47);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Indonesia Correction";
+            this.label1.Text = "Indonesian Correction";
             // 
             // btnkoreksi
             // 
@@ -88,6 +88,7 @@
             this.tbinput.Location = new System.Drawing.Point(13, 98);
             this.tbinput.Multiline = true;
             this.tbinput.Name = "tbinput";
+            this.tbinput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbinput.Size = new System.Drawing.Size(986, 185);
             this.tbinput.TabIndex = 6;
             this.tbinput.Enter += new System.EventHandler(this.tbinput_Enter);
@@ -138,6 +139,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Prototype Auto-Correct";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

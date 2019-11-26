@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 
@@ -10,6 +11,8 @@ namespace Protoype_Auto_Correct
         public static string MasukTeks(string input)
         {
             int n = input.Count(f => f == ' ') + 1;
+            string[] p = File.ReadAllLines(@"tandabaca.txt");
+
             int indexOf;
             string[] words = new string[n];
             string text = "";
@@ -18,7 +21,16 @@ namespace Protoype_Auto_Correct
                 indexOf = input.IndexOf(' ');
                 if (indexOf > 0)
                 {
-                    words[i] = input.Remove(indexOf);
+                    string kata = input.Remove(indexOf);
+                    for(int g = 0; g < 23; g++)
+                    {
+                        int h = kata.IndexOf(p[g]);
+                        if (h > 0)
+                        {
+                            kata = kata.Remove(h, 1);
+                        }
+                    }
+                    words[i] = kata;
                     input = input.Remove(0, indexOf + 1);
                 }
                 else
@@ -41,7 +53,7 @@ namespace Protoype_Auto_Correct
             foreach (Thread thread in threads)
                 thread.Join();
             foreach (string word in words)
-                text += word + " ";
+                    text += word + " ";
             return text;
         }
 
@@ -137,12 +149,12 @@ namespace Protoype_Auto_Correct
             List<string> listString = new List<string>();
             int n = kata.Count();
             char[] huruf = new char[n];
-            for (int k = 0; k < n; k++)
-            {
-                huruf[k] = kata[k];
-            }
             for (int i = 0; i < n - 1; i++)
             {
+                for (int k = 0; k < n; k++)
+                {
+                    huruf[k] = kata[k];
+                }
                 char m = huruf[i + 1];
                 huruf[i + 1] = huruf[i];
                 huruf[i] = m;
